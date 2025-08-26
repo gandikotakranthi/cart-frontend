@@ -16,6 +16,7 @@ export const AppContextProvider = ({children})=>{
     const [products, setProducts ] = useState([])
 
     const [cartItems, setCartItems ] = useState({})
+    const [searchQuery, setSearchQuery ] = useState({})
 
     // Fetch All Products
     const fetchProduct = async ()=>{
@@ -25,9 +26,9 @@ export const AppContextProvider = ({children})=>{
     //Add Product to cart
     const addtocart = (itemId)=>{
         let cartData = structuredClone(cartItems);
-
+        
         if(cartData[itemId]){
-            cartData[itemId] +=1;
+            cartData[itemId] += 1;
         }else{
             cartData[itemId] = 1;
         }
@@ -36,25 +37,25 @@ export const AppContextProvider = ({children})=>{
     }
 
     // Update Cart Item Quantity
-    const c = (itemsId, quantity)=>{
+    const updateCartItem = (itemsId, quantity)=>{
     let cartData = structuredClone (cartItems);
     cartData[itemsId] = quantity;
-    setCartItem (cartData)
+    setCartItems (cartData)
     toast.success ("Cart Updated")
 
     }
 
     // Remove Product from Cart
-const removeFromCart = (itemId)=>{
-let cartData = structuredClone (cartItems);
-if(cartData[itemId]){
-    cartData[itemId] -= 1;
-    if(cartData[itemId] === 0){
-        delete cartData[itemId];
+const removeFromcart = (itemId)=>{
+    let cartData = structuredClone (cartItems);
+    if(cartData[itemId]){
+        cartData[itemId] -= 1;
+        if(cartData[itemId] === 0){
+            delete cartData[itemId];
     }
-}
-toast.success("Remove from Cart")
-setCartItems(cartData)
+    toast.success("Remove from Cart")
+    setCartItems(cartData)
+    }
 }
 
 
@@ -62,7 +63,7 @@ setCartItems(cartData)
         fetchProduct()
     },[])
     
-    const value = {navigate, user, setUser, SetIsSeller, isSeller, showUserLogin, setShowUserLogin, products, currency, addtocart, removeFromCart, cartItems }
+    const value = {navigate, user, setUser, SetIsSeller, isSeller, showUserLogin, setShowUserLogin, products, currency, addtocart,updateCartItem, removeFromcart, cartItems, searchQuery, setSearchQuery }
 
      return <AppContext.Provider  value={value} >
         {children}
